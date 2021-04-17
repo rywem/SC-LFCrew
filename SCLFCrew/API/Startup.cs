@@ -36,7 +36,6 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMediatR(typeof(Login.Handler).Assembly);
-            services.AddScoped<ITokenService, TokenService>();
             services.AddIdentityServices(Configuration);
             services.AddControllers();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);

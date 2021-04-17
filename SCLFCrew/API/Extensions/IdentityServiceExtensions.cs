@@ -15,6 +15,7 @@ namespace SCLFCrew.API.Extensions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration Configuration)
         {
+            services.AddScoped<ITokenService, TokenService>();
             services.AddIdentityCore<AppUser>(opt => 
             {
                 opt.Password.RequireNonAlphanumeric = false;
