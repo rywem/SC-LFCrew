@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using SCLFCrew.Application.Interfaces;
+using SCLFCrew.Application.Services;
 using SCLFCrew.Domain;
 using SCLFCrew.Persistence;
 

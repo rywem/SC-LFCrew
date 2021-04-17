@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -27,9 +28,13 @@ namespace SCLFCrew.Persistence
 
             var admin = new AppUser
             {
-                UserName = "admin"
+                Id = 1,
+                UserName = "admin",
+                SCName = "admin",
+                DiscordName = "admin#0001",
+                SecurityStamp = Guid.NewGuid().ToString()
             };
-            await userManager.CreateAsync(admin, "password");
+            await userManager.CreateAsync(admin, "Password1");
 
             await userManager.AddToRolesAsync(admin, new[] { "Admin", "Support" });
         }

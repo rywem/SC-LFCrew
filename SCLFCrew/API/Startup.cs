@@ -14,6 +14,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SCLFCrew.Persistence;
 using SCLFCrew.API.Extensions;
+using MediatR;
+using SCLFCrew.Application.Helpers;
+using SCLFCrew.Application.AppUsers;
+using SCLFCrew.Domain.DTOs;
+using SCLFCrew.Application.Interfaces;
+using SCLFCrew.Application.Services;
 
 namespace API
 {
@@ -29,8 +35,11 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMediatR(typeof(Login.Handler).Assembly);
+            services.AddScoped<ITokenService, TokenService>();
             services.AddIdentityServices(Configuration);
             services.AddControllers();
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddDbContext<DataContext>(opt =>
             {
                 opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
