@@ -13,6 +13,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SCLFCrew.Persistence;
+using SCLFCrew.API.Extensions;
+
 namespace API
 {
     public class Startup
@@ -27,7 +29,7 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddIdentityServices(Configuration);
             services.AddControllers();
             services.AddDbContext<DataContext>(opt =>
             {
