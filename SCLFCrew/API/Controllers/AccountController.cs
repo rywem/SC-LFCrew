@@ -1,7 +1,9 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SCLFCrew.Application.AppUsers;
+using SCLFCrew.Domain;
 using SCLFCrew.Domain.DTOs;
 using SCLFCrew.Persistence;
 
@@ -11,10 +13,10 @@ namespace SCLFCrew.API.Controllers
     [ApiController]
     public class AccountController : BaseApiController
     {
-        private readonly DataContext _context;
-        public AccountController(DataContext context)
+        private UserManager<AppUser> _userManager;
+        public AccountController(UserManager<AppUser> userManager)
         {
-            _context = context;            
+            _userManager = userManager;           
         }
 
         [HttpPost("register")]
@@ -23,13 +25,19 @@ namespace SCLFCrew.API.Controllers
             if(await UserExists(registerDto.Username))
                 return BadRequest("Username is taken.");
             
-            return await Mediator.Send(new Register.Command(){ RegisterDto = registerDto });                      
+            var result = await Mediator.Send(new Register.Command(){ RegisterDto = registerDto });
+
+            if ( result == null )
+                return BadRequest("Invalid");
+
+            return result;
         }
 
         private async Task<bool> UserExists(string username)
         {
-            return await _context.AppUsers.AnyAsync(x => x.UserName == username.ToLower());
+            return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
         }
+
 
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)

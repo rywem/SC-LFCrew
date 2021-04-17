@@ -7,6 +7,9 @@ using SCLFCrew.Domain.DTOs;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SCLFCrew.Persistence;
+using Microsoft.AspNetCore.Identity;
+using SCLFCrew.Domain;
+
 namespace SCLFCrew.Application.AppUsers
 {
     public class Login
@@ -19,19 +22,26 @@ namespace SCLFCrew.Application.AppUsers
         
         public class Handler : IRequestHandler<Command, UserDto>
         {
-            private readonly DataContext _context;
             private ITokenService _tokenService;
-            public Handler (DataContext context, ITokenService tokenService)
+            private UserManager<AppUser> _userManager;
+            private SignInManager<AppUser> _signInManager;
+            public Handler (UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService)
             {
-                _context = context;
                 _tokenService = tokenService;
+                _userManager = userManager;
+                _signInManager = signInManager;
             }
 
             public async Task<UserDto> Handle(Command request, CancellationToken cancellationToken)
-            {                              
-                var user = await _context.AppUsers.SingleOrDefaultAsync(x => x.UserName == request.LoginDto.Username);
+            {                           
+                var user = await _userManager.Users.SingleOrDefaultAsync(x => x.UserName == request.LoginDto.Username.ToLower());
 
                 if ( user == null )
+                    return null;
+
+                var result = await _signInManager.CheckPasswordSignInAsync(user, request.LoginDto.Password, false);
+
+                if ( !result.Succeeded )
                     return null;
 
                 return new UserDto() 
@@ -39,7 +49,6 @@ namespace SCLFCrew.Application.AppUsers
                     Username = user.UserName,
                     Token = _tokenService.CreateToken(user)
                 };
-            
             }
         }
     }
