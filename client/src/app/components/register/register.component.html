@@ -1,0 +1,30 @@
+<div class="register-form">
+    <form #registerForm="ngForm" class="mt-2 mt-md-0" (ngSubmit)="register()" autocomplete="off">
+        <div class="form-group row">
+            <h2>New Crew Register</h2>
+        </div>
+        <div class="form-group row">
+            <label for="registerUsername">Username</label>
+            <input name="registerUsername" [(ngModel)]="model.username" class="form-control mr-sm-2" type="text" placerholder="Username">
+        </div>
+        <div class="form-group row">
+            <label for="password">Password</label>
+            <input name="password" [(ngModel)]="model.password" class="form-control mr-sm-2" type="password" placerholder="Password">
+        </div>
+        <div class="form-group row">
+            <label for="confirmPassword">Confirm Password</label>
+            <input name="confirmPassword" [(ngModel)]="model.confirmPassword" class="form-control mr-sm-2" type="password" placerholder="Confirm Password">
+        </div>
+        <div class="form-group row">
+            <label for="scname">Star Citizen Name</label>
+            <input name="scname" [(ngModel)]="model.scName" class="form-control mr-sm-2" type="text" placerholder="Star Citizen Name">
+        </div>
+        <div class="form-group row">
+            <label for="discordName">Discord Name</label>
+            <input name="discordName" [(ngModel)]="model.discordName" class="form-control mr-sm-2" type="text" placerholder="Discord Name">
+        </div>
+        <div class="form-group row">
+            <button class="btn btn-outline-sucess mr-sm-2 btn-primary" type="submit">Register</button>
+        </div>
+    </form>
+</div>
