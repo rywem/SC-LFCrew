@@ -11,6 +11,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ToastrModule } from 'ngx-toastr';
 import { HomeComponent } from './components/home/home.component';
 import { FindCrewComponent } from './components/find-crew/find-crew.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { FindCaptainComponent } from './components/find-captain/find-captain.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { FindCrewComponent } from './components/find-crew/find-crew.component';
     RegisterComponent,
     HomeComponent,
     FindCrewComponent,
+    SettingsComponent,
+    FindCaptainComponent,
   ],
   imports: [
     BrowserModule,
