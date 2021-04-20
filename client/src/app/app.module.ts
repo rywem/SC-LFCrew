@@ -9,12 +9,16 @@ import { RegisterComponent } from './components/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ToastrModule } from 'ngx-toastr';
+import { HomeComponent } from './components/home/home.component';
+import { FindCrewComponent } from './components/find-crew/find-crew.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     RegisterComponent,
+    HomeComponent,
+    FindCrewComponent,
   ],
   imports: [
     BrowserModule,
