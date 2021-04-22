@@ -39,13 +39,18 @@ public class Register
                 
                 var result = await _userManager.CreateAsync(user, request.RegisterDto.Password);
                 
+                var roleResult = await _userManager.AddToRoleAsync(user, "Member");
+
+                if(!roleResult.Succeeded)
+                    return null;
+
                 if ( !result.Succeeded )
                     return null;
                 
                 return new UserDto() 
                 {
                     Username = user.UserName,
-                    Token = _tokenService.CreateToken(user)
+                    Token = await _tokenService.CreateToken(user)
                 };
             }
         }

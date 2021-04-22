@@ -47,7 +47,7 @@ namespace SCLFCrew.Application.AppUsers
                 return new UserDto() 
                 {
                     Username = user.UserName,
-                    Token = _tokenService.CreateToken(user)
+                    Token = await _tokenService.CreateToken(user)
                 };
             }
         }
